@@ -24,6 +24,11 @@
         },
         "runtime": {
           "SmartIndustries.Smartlock.Platform.dll": {}
+        },
+        "resources": {
+          "es/SmartIndustries.Smartlock.Platform.resources.dll": {
+            "locale": "es"
+          }
         }
       },
       "BCrypt.Net-Next/4.2.0": {

@@ -373,3 +373,9 @@
 /home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/SmartIndustries.Smartlock.Platform.pdb
 /home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/SmartIndustries.Smartlock.Platform.genruntimeconfig.cache
 /home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/ref/SmartIndustries.Smartlock.Platform.dll
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/bin/Debug/net10.0/es/SmartIndustries.Smartlock.Platform.resources.dll
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/SmartIndustries.Smartlock.Platform.Shared.Resources.Errors.ErrorMessages.resources
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/SmartIndustries.Smartlock.Platform.Shared.Resources.Errors.ErrorMessages.es.resources
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/SmartIndustries.Smartlock.Platform.csproj.GenerateResource.cache
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/es/SmartIndustries.Smartlock.Platform.resources.cs
+/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/Debug/net10.0/es/SmartIndustries.Smartlock.Platform.resources.dll
