@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2K8/XQ2XQzM=",
+  "dgSpecHash": "w8uKOoBonbM=",
   "success": true,
-  "projectFilePath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
+  "projectFilePath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
   "expectedPackageFiles": [
     "/home/tmr/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/tmr/.nuget/packages/cortex.mediator/3.1.2/cortex.mediator.3.1.2.nupkg.sha512",

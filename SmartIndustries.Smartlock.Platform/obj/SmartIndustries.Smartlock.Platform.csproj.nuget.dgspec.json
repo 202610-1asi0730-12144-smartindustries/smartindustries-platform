@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj": {}
+    "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj": {}
   },
   "projects": {
-    "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj": {
+    "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
+        "projectUniqueName": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
         "projectName": "SmartIndustries.Smartlock.Platform",
-        "projectPath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
+        "projectPath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/SmartIndustries.Smartlock.Platform.csproj",
         "packagesPath": "/home/tmr/.nuget/packages/",
-        "outputPath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartindustries-platform/SmartIndustries.Smartlock.Platform/obj/",
+        "outputPath": "/home/tmr/Documents/Universidad/aplicaciones-web/codigo/smartlock-platform/SmartIndustries.Smartlock.Platform/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/tmr/.nuget/NuGet/NuGet.Config"
