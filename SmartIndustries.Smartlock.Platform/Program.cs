@@ -42,6 +42,7 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         throw new InvalidOperationException("Database connection string is not set in the configuration.");
 
     var connectionString = Environment.ExpandEnvironmentVariables(connectionStringTemplate);
+    Console.WriteLine($"Resolved connection: {connectionString}");
     if (string.IsNullOrWhiteSpace(connectionString))
         throw new InvalidOperationException("Database connection string is not set in the configuration.");
 
