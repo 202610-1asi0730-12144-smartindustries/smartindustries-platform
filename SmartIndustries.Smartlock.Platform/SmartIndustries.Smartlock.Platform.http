@@ -1,0 +1,6 @@
+@SmartIndustries.Smartlock.Platform_HostAddress = http://localhost:5096
+
+GET {{SmartIndustries.Smartlock.Platform_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
