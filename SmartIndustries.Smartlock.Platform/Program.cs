@@ -42,7 +42,6 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
         throw new InvalidOperationException("Database connection string is not set in the configuration.");
 
     var connectionString = Environment.ExpandEnvironmentVariables(connectionStringTemplate);
-    Console.WriteLine($"Resolved connection: {connectionString}");
     if (string.IsNullOrWhiteSpace(connectionString))
         throw new InvalidOperationException("Database connection string is not set in the configuration.");
 
@@ -75,7 +74,6 @@ builder.Services.AddSwaggerGen(options =>
             Title = "SmartIndustries.Smartlock.Platform",
             Version = "v1",
             Description = "SmartLock Platform API",
-            TermsOfService = new Uri("https://acme-learning.com/tos"),
         });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
