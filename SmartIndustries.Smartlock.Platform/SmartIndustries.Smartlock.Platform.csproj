@@ -26,9 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared\Application\" />
-      <Folder Include="Shared\Infrastructure\" />
-      <Folder Include="Shared\Resources\Errors\" />
+      <EmbeddedResource Update="Shared\Resources\Errors\ErrorMessages.es.resx">
+        <DependentUpon>ErrorMessages.cs</DependentUpon>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

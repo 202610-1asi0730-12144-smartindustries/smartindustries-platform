@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartIndustries.Smartlock.Platform")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+230bc31ed6e2c527caaf9b5097ff6c8c2ba99b9d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf7576d1b2a98a9602312b7b85586cd2b849be56")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartIndustries.Smartlock.Platform")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartIndustries.Smartlock.Platform")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
