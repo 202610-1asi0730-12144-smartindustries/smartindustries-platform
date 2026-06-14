@@ -26,12 +26,16 @@ public class UserCommandService(
                 localizer["IamError.EmailAlreadyTaken", command.Email]);
 
         var hashedPassword = hashingService.HashPassword(command.Password);
-        var user = new User(command.FirstName, command.LastName, hashedPassword, command.Email);
         try
         {
+            var user = new User(command.FirstName, command.LastName, hashedPassword, command.Email);
             await userRepository.AddAsync(user, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);
             return Result.Success();
+        }
+        catch (ArgumentException ex)
+        {
+            return Result.Failure(IamError.InvalidData, ex.Message);
         }
         catch (OperationCanceledException)
         {
