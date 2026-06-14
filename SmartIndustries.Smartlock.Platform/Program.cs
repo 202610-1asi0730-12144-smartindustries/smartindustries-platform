@@ -4,6 +4,15 @@ using Cortex.Mediator.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi;
+using SmartIndustries.Smartlock.Platform.Iam.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.OutboundServices;
+using SmartIndustries.Smartlock.Platform.Iam.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Hashing.BCrypt.Services;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Extensions;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Mediator.Cortex.Configuration;
@@ -94,6 +103,19 @@ builder.Services.AddSwaggerGen(options =>
 // Shared Bounded Context
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Add Mediator Injection Configuration
+builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
+
+// Add Cortex Mediator for Event Handling
+builder.Services.AddCortexMediator(
+    [typeof(Program)]);
+
+// IAM Bounded Context
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
 
 // Mediator Configuration
 
@@ -139,6 +161,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAllPolicy");
 
 // Add Authorization Middleware to Pipeline
+app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
 
