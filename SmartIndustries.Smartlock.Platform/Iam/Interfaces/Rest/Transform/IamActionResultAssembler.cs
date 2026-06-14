@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Domain.Model;
+using SmartIndustries.Smartlock.Platform.Iam.Domain.Model.Aggregates;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 
@@ -31,4 +32,15 @@ public static class IamActionResultAssembler
         return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
     }
     
+    public static IActionResult ToActionResultFromSignInResult(
+        ControllerBase controller,
+        Result<(User user, string token)> result,
+        ProblemDetailsFactory problemDetailsFactory,
+        Func<(User user, string token), IActionResult> successAction)
+    {
+        if (result.IsSuccess) return successAction(result.Value!);
+
+        var statusCode = ToStatusCode((IamError)result.Error!);
+        return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
+    }
 }
