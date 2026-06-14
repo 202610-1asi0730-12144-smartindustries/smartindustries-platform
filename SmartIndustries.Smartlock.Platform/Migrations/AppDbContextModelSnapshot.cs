@@ -30,6 +30,11 @@ namespace SmartIndustries.Smartlock.Platform.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("password");
+
                     b.HasKey("Id")
                         .HasName("p_k_users");
 
@@ -89,34 +94,10 @@ namespace SmartIndustries.Smartlock.Platform.Migrations
                                 .HasConstraintName("f_k_users_users_id");
                         });
 
-                    b.OwnsOne("SmartIndustries.Smartlock.Platform.Shared.Domain.Model.ValueObjects.Password", "Password", b1 =>
-                        {
-                            b1.Property<long>("Id")
-                                .HasColumnType("bigint")
-                                .HasColumnName("id");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("longtext")
-                                .HasColumnName("password");
-
-                            b1.HasKey("Id")
-                                .HasName("p_k_users");
-
-                            b1.ToTable("users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("Id")
-                                .HasConstraintName("f_k_users_users_id");
-                        });
-
                     b.Navigation("Email")
                         .IsRequired();
 
                     b.Navigation("Name")
-                        .IsRequired();
-
-                    b.Navigation("Password")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

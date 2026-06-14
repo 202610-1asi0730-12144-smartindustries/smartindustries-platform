@@ -6,13 +6,13 @@ public partial class User
 {
     public long Id { get; private set; }
     public FullName Name { get; private set; }
-    public Password Password { get; private set; }
+    public string PasswordHash { get; private set; }
     public Email Email { get; private set; }
 
-    public User(string firstName, string lastName, string password, string email)
+    public User(string firstName, string lastName, string passwordHash, string email)
     {
         Name = new FullName(firstName, lastName);
-        Password = new Password(password);
+        PasswordHash = passwordHash;
         Email = new Email(email);
     }
 

@@ -7,6 +7,7 @@ using SmartIndustries.Smartlock.Platform.Iam.Domain.Model.Aggregates;
 using SmartIndustries.Smartlock.Platform.Iam.Domain.Model.Commands;
 using SmartIndustries.Smartlock.Platform.Iam.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
+using SmartIndustries.Smartlock.Platform.Shared.Domain.Model.ValueObjects;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Resources.Errors;
 
@@ -25,9 +26,10 @@ public class UserCommandService(
             return Result.Failure(IamError.EmailAlreadyTaken,
                 localizer["IamError.EmailAlreadyTaken", command.Email]);
 
-        var hashedPassword = hashingService.HashPassword(command.Password);
         try
         {
+            var password = new Password(command.Password);
+            var hashedPassword = hashingService.HashPassword(password.Value);
             var user = new User(command.FirstName, command.LastName, hashedPassword, command.Email);
             await userRepository.AddAsync(user, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);

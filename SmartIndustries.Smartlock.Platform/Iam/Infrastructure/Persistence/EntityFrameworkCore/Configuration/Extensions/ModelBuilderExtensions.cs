@@ -19,11 +19,7 @@ public static class ModelBuilderExtensions
                 name.Property(n => n.LastName).HasColumnName("last_name").IsRequired();
             });
 
-            entity.OwnsOne(e => e.Password, password =>
-            {
-                password.WithOwner().HasForeignKey("Id");
-                password.Property(p => p.Value).HasColumnName("password").IsRequired();
-            });
+            entity.Property(e => e.PasswordHash).HasColumnName("password").IsRequired();
 
             entity.OwnsOne(e => e.Email, email =>
             {
