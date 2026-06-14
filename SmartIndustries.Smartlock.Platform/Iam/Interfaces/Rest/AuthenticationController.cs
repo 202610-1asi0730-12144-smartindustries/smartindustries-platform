@@ -35,5 +35,23 @@ public class AuthenticationController(
             problemDetailsFactory,
             () => Ok(new { message = "User registered successfully" }));
     }
+
     
+    [HttpPost("sign-in")]
+    [AllowAnonymous]
+    [SwaggerOperation(
+        Summary = "Sign in", 
+        Description = "Sign in with email and password")
+    ]
+    [SwaggerResponse(StatusCodes.Status200OK, "Authenticated", typeof(AuthenticatedUserResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid username or password")]
+    public async Task<IActionResult> SignIn([FromBody] SignInResource resource, CancellationToken ct)
+    {
+        var command = SignInCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var result = await userCommandService.Handle(command, ct);
+
+        return IamActionResultAssembler.ToActionResultFromSignInResult(this, result, problemDetailsFactory,
+            userAndToken => Ok(AuthenticatedUserResourceFromEntityAssembler.ToResourceFromEntity(
+                userAndToken.user, userAndToken.token)));
+    }
 }
