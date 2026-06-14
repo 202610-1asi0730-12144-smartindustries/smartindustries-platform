@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.OutboundServices;
 using SmartIndustries.Smartlock.Platform.Iam.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.Iam.Domain.Model.queries;
+using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 
 namespace SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Components;
 
