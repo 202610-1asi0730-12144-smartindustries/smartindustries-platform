@@ -7,6 +7,8 @@ using Microsoft.OpenApi;
 using SmartIndustries.Smartlock.Platform.Iam.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.CommandServices;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.OutboundServices;
+using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.QueryServices;
+using SmartIndustries.Smartlock.Platform.Iam.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.Iam.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Hashing.BCrypt.Services;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
@@ -113,6 +115,7 @@ builder.Services.AddCortexMediator(
 // IAM Bounded Context
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
