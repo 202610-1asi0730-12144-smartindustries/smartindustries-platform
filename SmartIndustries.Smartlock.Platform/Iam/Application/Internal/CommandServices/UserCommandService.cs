@@ -52,4 +52,24 @@ public class UserCommandService(
             return Result.Failure(IamError.InternalServerError, localizer["IamError.InternalServerError"]);
         }
     }
+    
+    public async Task<Result<(User user, string token)>> Handle(SignInCommand command, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var user = await userRepository.FindByEmailAsync(new Email(command.Email), cancellationToken);
+
+            if (user == null || !hashingService.VerifyPassword(command.Password, user.PasswordHash))
+                return Result<(User user, string token)>.Failure(IamError.InvalidCredentials,
+                    localizer["IamError.InvalidCredentials"]);
+
+            var token = tokenService.GenerateToken(user);
+
+            return Result<(User user, string token)>.Success((user, token));
+        }
+        catch (ArgumentException ex)
+        {
+            return Result<(User user, string token)>.Failure(IamError.InvalidData, ex.Message);
+        }
+    }
 }
