@@ -16,6 +16,10 @@ using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Mediator.Cortex.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Persistence.EntityFramerWorkCore.Configuration;
@@ -119,6 +123,10 @@ builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
+
+// SpaceManagement Bounded Context
+builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+builder.Services.AddScoped<IOrganizationCommandService, OrganizationCommandService>();
 
 // Mediator Configuration
 
