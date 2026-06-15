@@ -135,6 +135,8 @@ builder.Services.AddScoped<IOrganizationCommandService, OrganizationCommandServi
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleCommandService, RoleCommandService>();
+builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+builder.Services.AddScoped<IMembershipCommandService, MembershipCommandService>();
 
 // Mediator Configuration
 
