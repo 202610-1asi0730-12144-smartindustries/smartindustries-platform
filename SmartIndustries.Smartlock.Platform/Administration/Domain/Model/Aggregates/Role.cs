@@ -28,6 +28,6 @@ public partial class Role
             OrganizationId = organizationId,
             Name = new GenericName("Basic"),
             Permissions = new RolePermissions(false, false, false),
-            Deletable = true
+            Deletable = false
         };
 }

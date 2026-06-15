@@ -19,5 +19,12 @@ public class OrganizationCreatedIntegrationEventHandler(
         if (result.IsFailure)
             logger.LogWarning("Failed to create root role for organization {OrganizationId}: {Message}",
                 integrationEvent.OrganizationId, result.Message);
+
+        var basicResult = await roleCommandService.Handle(
+            new CreateBasicRoleCommand(integrationEvent.OrganizationId), cancellationToken);
+
+        if (basicResult.IsFailure)
+            logger.LogWarning("Failed to create basic role for organization {OrganizationId}: {Message}",
+                integrationEvent.OrganizationId, basicResult.Message);
     }
 }
