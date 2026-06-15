@@ -28,6 +28,14 @@ public static class ModelBuilderExtensions
                 permissions.Property(p => p.CanConnectDevices).HasColumnName("can_connect_devices").IsRequired();
             });
         });
+
+        builder.Entity<Membership>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
+            entity.Property(e => e.UserId).IsRequired();
+            entity.Property(e => e.RoleId).IsRequired();
+        });
     }
     
 }
