@@ -22,6 +22,8 @@ using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Administration.Application.Internal.CommandServices;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Mediator.Cortex.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Persistence.EntityFramerWorkCore.Configuration;
@@ -132,6 +134,7 @@ builder.Services.AddScoped<IOrganizationCommandService, OrganizationCommandServi
 
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRoleCommandService, RoleCommandService>();
 
 // Mediator Configuration
 
