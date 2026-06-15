@@ -21,4 +21,13 @@ public partial class Role
             Permissions = new RolePermissions(true, true, true),
             Deletable = false
         };
+
+    public static Role CreateBasic(long organizationId)
+        => new()
+        {
+            OrganizationId = organizationId,
+            Name = new GenericName("Basic"),
+            Permissions = new RolePermissions(false, false, false),
+            Deletable = true
+        };
 }
