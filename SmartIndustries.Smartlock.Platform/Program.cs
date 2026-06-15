@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi;
 using SmartIndustries.Smartlock.Platform.Iam.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Iam.Application.Acl;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.CommandServices;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.OutboundServices;
 using SmartIndustries.Smartlock.Platform.Iam.Application.Internal.QueryServices;
@@ -15,6 +16,7 @@ using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Persistence.EntityFr
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Extensions;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
+using SmartIndustries.Smartlock.Platform.Iam.Interfaces.Acl;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Internal.CommandServices;
@@ -128,6 +130,9 @@ builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 
+// IAM ACL
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
 // SpaceManagement Bounded Context
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IOrganizationCommandService, OrganizationCommandService>();
@@ -137,15 +142,6 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleCommandService, RoleCommandService>();
 builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
 builder.Services.AddScoped<IMembershipCommandService, MembershipCommandService>();
-
-// Mediator Configuration
-
-// Add Mediator Injection Configuration
-builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
-
-// Add Cortex Mediator for Event Handling
-builder.Services.AddCortexMediator(
-    [typeof(Program)]);
 
 
 var app = builder.Build();
