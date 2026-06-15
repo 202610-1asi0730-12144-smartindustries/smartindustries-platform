@@ -7,4 +7,5 @@ namespace SmartIndustries.Smartlock.Platform.Administration.Application.CommandS
 public interface IRoleCommandService
 {
     Task<Result<Role>> Handle(CreateRootRoleCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Role>> Handle(CreateBasicRoleCommand command, CancellationToken cancellationToken = default);
 }

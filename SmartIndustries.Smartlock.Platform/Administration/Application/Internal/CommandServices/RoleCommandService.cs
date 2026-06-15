@@ -46,4 +46,32 @@ public class RoleCommandService(
             return Result<Role>.Failure(AdministrationError.InternalServerError, "An internal error occurred.");
         }
     }
+
+    public async Task<Result<Role>> Handle(CreateBasicRoleCommand command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var role = Role.CreateBasic(command.OrganizationId);
+            await roleRepository.AddAsync(role, cancellationToken);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result<Role>.Success(role);
+        }
+        catch (ArgumentException exception)
+        {
+            return Result<Role>.Failure(AdministrationError.InvalidData, exception.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result<Role>.Failure(AdministrationError.OperationCancelled, "Operation was cancelled.");
+        }
+        catch (DbUpdateException)
+        {
+            return Result<Role>.Failure(AdministrationError.DatabaseError, "Database error occurred.");
+        }
+        catch (Exception)
+        {
+            return Result<Role>.Failure(AdministrationError.InternalServerError, "An internal error occurred.");
+        }
+    }
 }
