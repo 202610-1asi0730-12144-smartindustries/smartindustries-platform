@@ -38,6 +38,10 @@ public static class ModelBuilderExtensions
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
             entity.Property(e => e.SiteId).IsRequired();
+            entity.HasOne<Site>()
+                .WithMany()
+                .HasForeignKey(device => device.SiteId)
+                .OnDelete(DeleteBehavior.Cascade);
             entity.Property(e => e.Status).HasConversion<string>().IsRequired().HasMaxLength(50);
             entity.Property(e => e.Mode).HasConversion<string>().IsRequired().HasMaxLength(50);
 
