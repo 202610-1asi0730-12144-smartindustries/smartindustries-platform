@@ -11,6 +11,7 @@
     <data name="SpaceManagementError.OrganizationAlreadyExists" xml:space="preserve"><value>La organización ya existe.</value></data>
     <data name="SpaceManagementError.SiteNotFound" xml:space="preserve"><value>Sitio no encontrado.</value></data>
     <data name="SpaceManagementError.DeviceNotFound" xml:space="preserve"><value>Dispositivo no encontrado.</value></data>
+    <data name="SpaceManagementError.PersonNotFound" xml:space="preserve"><value>Persona no encontrada.</value></data>
     <data name="SpaceManagementError.InvalidData" xml:space="preserve"><value>Datos inválidos.</value></data>
     <data name="SpaceManagementError.OperationCancelled" xml:space="preserve"><value>La operación fue cancelada.</value></data>
     <data name="SpaceManagementError.DatabaseError" xml:space="preserve"><value>Error de base de datos.</value></data>
