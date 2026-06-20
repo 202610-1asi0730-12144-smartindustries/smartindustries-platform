@@ -7,4 +7,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Command
 public interface ISiteCommandService
 {
     Task<Result<Site>> Handle(AddSiteToOrganizationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Site>> Handle(UpdateSiteInformationCommand command, CancellationToken cancellationToken = default);
 }
