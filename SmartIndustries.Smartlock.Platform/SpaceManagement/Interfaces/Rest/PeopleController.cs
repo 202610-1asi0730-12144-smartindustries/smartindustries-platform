@@ -35,4 +35,22 @@ public class PeopleController(
             person => Created($"/api/v1/organizations/{person.OrganizationId}/people/{person.Id}",
                 PersonResourceFromEntityAssembler.ToResourceFromEntity(person)));
     }
+
+    [HttpPut("{personId:long}")]
+    [SwaggerOperation(Summary = "Update person", Description = "Update an existing person")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Person updated", typeof(PersonResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid data")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Person not found")]
+    public async Task<IActionResult> UpdatePerson(
+        long personId,
+        [FromBody] UpdatePersonInformationResource resource,
+        CancellationToken cancellationToken)
+    {
+        var command = UpdatePersonInformationCommandFromResourceAssembler.ToCommandFromResource(resource, personId);
+        var result = await personCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromAddPersonResult(
+            this, result, problemDetailsFactory,
+            person => Ok(PersonResourceFromEntityAssembler.ToResourceFromEntity(person)));
+    }
 }
