@@ -34,6 +34,8 @@ using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Administration.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Administration.Application.Internal.QueryServices;
+using SmartIndustries.Smartlock.Platform.Administration.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.Report.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Report.Application.Internal.CommandServices;
 using SmartIndustries.Smartlock.Platform.Report.Domain.Repositories;
@@ -172,6 +174,7 @@ builder.Services.AddScoped<IScheduleDayCommandService, ScheduleDayCommandService
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleCommandService, RoleCommandService>();
+builder.Services.AddScoped<IRoleQueryService, RoleQueryService>();
 builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
 builder.Services.AddScoped<IMembershipCommandService, MembershipCommandService>();
 

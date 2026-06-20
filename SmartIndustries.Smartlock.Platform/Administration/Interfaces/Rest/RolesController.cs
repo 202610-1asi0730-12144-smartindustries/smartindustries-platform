@@ -1,6 +1,8 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Administration.Application.QueryServices;
+using SmartIndustries.Smartlock.Platform.Administration.Domain.Model.Queries;
 using SmartIndustries.Smartlock.Platform.Administration.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.Administration.Interfaces.Rest.Transform;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
@@ -16,8 +18,22 @@ namespace SmartIndustries.Smartlock.Platform.Administration.Interfaces.Rest;
 [SwaggerTag("Role endpoints")]
 public class RolesController(
     IRoleCommandService roleCommandService,
+    IRoleQueryService roleQueryService,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(Summary = "Get roles by organization", Description = "Returns all roles belonging to an organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Roles retrieved", typeof(IEnumerable<RoleResource>))]
+    public async Task<IActionResult> GetRolesByOrganization(
+        long organizationId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetRolesByOrganizationIdQuery(organizationId);
+        var roles = await roleQueryService.Handle(query, cancellationToken);
+        var resources = roles.Select(RoleResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpPost]
     [SwaggerOperation(Summary = "Add role to organization", Description = "Create a new custom role for an organization")]
     [SwaggerResponse(StatusCodes.Status201Created, "Role created", typeof(RoleResource))]
