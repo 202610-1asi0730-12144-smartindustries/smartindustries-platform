@@ -9,4 +9,5 @@ public interface IRoleCommandService
     Task<Result<Role>> Handle(CreateRootRoleCommand command, CancellationToken cancellationToken = default);
     Task<Result<Role>> Handle(CreateBasicRoleCommand command, CancellationToken cancellationToken = default);
     Task<Result<Role>> Handle(AddRoleToOrganizationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Role>> Handle(UpdateRoleInformationCommand command, CancellationToken cancellationToken = default);
 }

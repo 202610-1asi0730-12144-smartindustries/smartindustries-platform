@@ -107,4 +107,38 @@ public class RoleCommandService(
             return Result<Role>.Failure(AdministrationError.InternalServerError, localizer["AdministrationError.InternalServerError"]);
         }
     }
+
+    public async Task<Result<Role>> Handle(UpdateRoleInformationCommand command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var role = await roleRepository.FindByIdAsync(command.RoleId, cancellationToken);
+            if (role == null)
+                return Result<Role>.Failure(AdministrationError.RoleNotFound,
+                    localizer["AdministrationError.RoleNotFound"]);
+
+            var permissions = new RolePermissions(command.CanCreateSites, command.CanCreatePeople, command.CanConnectDevices);
+            role.UpdateInformation(command.Name, permissions);
+            roleRepository.Update(role);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result<Role>.Success(role);
+        }
+        catch (ArgumentException exception)
+        {
+            return Result<Role>.Failure(AdministrationError.InvalidData, exception.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result<Role>.Failure(AdministrationError.OperationCancelled, localizer["AdministrationError.OperationCancelled"]);
+        }
+        catch (DbUpdateException)
+        {
+            return Result<Role>.Failure(AdministrationError.DatabaseError, localizer["AdministrationError.DatabaseError"]);
+        }
+        catch (Exception)
+        {
+            return Result<Role>.Failure(AdministrationError.InternalServerError, localizer["AdministrationError.InternalServerError"]);
+        }
+    }
 }
