@@ -46,4 +46,15 @@ public partial class Role
             Deletable = true
         };
     }
+
+    public void UpdateInformation(string name, RolePermissions permissions)
+    {
+        if (string.Equals(name, "Root", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException("Role name 'Root' is reserved.", nameof(name));
+        if (string.Equals(name, "Basic", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException("Role name 'Basic' is reserved.", nameof(name));
+
+        Name = new GenericName(name);
+        Permissions = permissions;
+    }
 }
