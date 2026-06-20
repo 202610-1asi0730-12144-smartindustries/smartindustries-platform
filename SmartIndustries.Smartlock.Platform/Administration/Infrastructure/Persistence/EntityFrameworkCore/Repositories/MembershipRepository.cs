@@ -10,4 +10,14 @@ public class MembershipRepository(AppDbContext context) : BaseRepository<Members
 {
     public async Task<Membership?> FindByUserIdAsync(long userId, CancellationToken cancellationToken = default)
         => await context.Set<Membership>().FirstOrDefaultAsync(membership => membership.UserId == userId, cancellationToken);
+
+    public async Task<IEnumerable<Membership>> FindByOrganizationIdAsync(long organizationId, CancellationToken cancellationToken = default)
+        => await context.Set<Membership>()
+            .Join(context.Set<Role>(),
+                membership => membership.RoleId,
+                role => role.Id,
+                (membership, role) => new { membership, role })
+            .Where(joined => joined.role.OrganizationId == organizationId)
+            .Select(joined => joined.membership)
+            .ToListAsync(cancellationToken);
 }
