@@ -13,4 +13,9 @@ public partial class Membership
     }
 
     private Membership() { }
+
+    public void UpdateRole(long roleId)
+    {
+        RoleId = roleId;
+    }
 }
