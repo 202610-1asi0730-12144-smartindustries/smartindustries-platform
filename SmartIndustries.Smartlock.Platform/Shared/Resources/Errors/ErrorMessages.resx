@@ -19,4 +19,8 @@
     <data name="AdministrationError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
     <data name="AdministrationError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
     <data name="AdministrationError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
+    <data name="AccessError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
+    <data name="AccessError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="AccessError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
+    <data name="AccessError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
 </root>
