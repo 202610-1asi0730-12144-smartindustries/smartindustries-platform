@@ -17,4 +17,10 @@ public partial class Site
     }
 
     private Site() { }
+
+    public void UpdateInformation(string name, string description)
+    {
+        Name = new GenericName(name);
+        Description = description?.Trim() ?? string.Empty;
+    }
 }
