@@ -41,4 +41,22 @@ public class OrganizationsController(
             organization => Created($"/api/v1/organizations/{organization.Id}",
                 OrganizationResourceFromEntityAssembler.ToResourceFromEntity(organization)));
     }
+
+    [HttpPut("{organizationId:long}")]
+    [SwaggerOperation(Summary = "Update organization", Description = "Update an existing organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Organization updated", typeof(OrganizationResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid data")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Organization not found")]
+    public async Task<IActionResult> UpdateOrganization(
+        long organizationId,
+        [FromBody] UpdateOrganizationInformationResource resource,
+        CancellationToken cancellationToken)
+    {
+        var command = UpdateOrganizationInformationCommandFromResourceAssembler.ToCommandFromResource(resource, organizationId);
+        var result = await organizationCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromCreateOrganizationResult(
+            this, result, problemDetailsFactory,
+            organization => Ok(OrganizationResourceFromEntityAssembler.ToResourceFromEntity(organization)));
+    }
 }
