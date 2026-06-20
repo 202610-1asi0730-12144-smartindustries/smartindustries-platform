@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Queries;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,8 +19,22 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest;
 [SwaggerTag("Site endpoints")]
 public class SitesController(
     ISiteCommandService siteCommandService,
+    ISiteQueryService siteQueryService,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(Summary = "Get sites by organization", Description = "Returns all sites belonging to an organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Sites retrieved", typeof(IEnumerable<SiteResource>))]
+    public async Task<IActionResult> GetSitesByOrganization(
+        long organizationId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetSitesByOrganizationIdQuery(organizationId);
+        var sites = await siteQueryService.Handle(query, cancellationToken);
+        var resources = sites.Select(SiteResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpPost]
     [SwaggerOperation(Summary = "Add site to organization", Description = "Add a new site to an organization")]
     [SwaggerResponse(StatusCodes.Status201Created, "Site created", typeof(SiteResource))]
