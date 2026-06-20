@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <data name="GenericError" xml:space="preserve"><value>An error occurred.</value></data>
-    <data name="OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="IamError.EmailAlreadyTaken" xml:space="preserve"><value>Email is already registered.</value></data>
+    <data name="IamError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="IamError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
+    <data name="IamError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
+    <data name="IamError.InvalidCredentials" xml:space="preserve"><value>Invalid credentials.</value></data>
+    <data name="IamError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
+    <data name="SpaceManagementError.OrganizationNotFound" xml:space="preserve"><value>Organization not found.</value></data>
+    <data name="SpaceManagementError.OrganizationAlreadyExists" xml:space="preserve"><value>Organization already exists.</value></data>
+    <data name="SpaceManagementError.SiteNotFound" xml:space="preserve"><value>Site not found.</value></data>
+    <data name="SpaceManagementError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
+    <data name="SpaceManagementError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="SpaceManagementError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
+    <data name="SpaceManagementError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
+    <data name="AdministrationError.RoleNotFound" xml:space="preserve"><value>Role not found.</value></data>
+    <data name="AdministrationError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
+    <data name="AdministrationError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="AdministrationError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
+    <data name="AdministrationError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
 </root>
