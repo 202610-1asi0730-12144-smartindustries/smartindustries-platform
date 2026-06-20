@@ -8,4 +8,5 @@ public interface IPersonCommandService
 {
     Task<Result<Person>> Handle(AddPersonToOrganizationCommand command, CancellationToken cancellationToken = default);
     Task<Result<Person>> Handle(UpdatePersonInformationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Person>> Handle(DeletePersonCommand command, CancellationToken cancellationToken = default);
 }
