@@ -30,6 +30,10 @@ using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Administration.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Report.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Report.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Report.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Report.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Mediator.Cortex.Configuration;
 using SmartIndustries.Smartlock.Platform.Shared.Infrastructure.Persistence.EntityFramerWorkCore.Configuration;
@@ -152,6 +156,10 @@ builder.Services.AddScoped<IAccessGroupRepository, AccessGroupRepository>();
 builder.Services.AddScoped<IAccessGroupCommandService, AccessGroupCommandService>();
 builder.Services.AddScoped<IPersonAccessRepository, PersonAccessRepository>();
 builder.Services.AddScoped<IPersonAccessCommandService, PersonAccessCommandService>();
+
+// Report Bounded Context
+builder.Services.AddScoped<IScheduleDayRepository, ScheduleDayRepository>();
+builder.Services.AddScoped<IScheduleDayCommandService, ScheduleDayCommandService>();
 
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
