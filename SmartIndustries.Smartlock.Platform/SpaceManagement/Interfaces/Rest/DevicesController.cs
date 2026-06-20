@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -52,5 +53,21 @@ public class DevicesController(
         return SpaceManagementActionResultAssembler.ToActionResultFromConnectDeviceResult(
             this, result, problemDetailsFactory,
             device => Ok(DeviceResourceFromEntityAssembler.ToResourceFromEntity(device)));
+    }
+
+    [HttpDelete("{deviceId:long}")]
+    [SwaggerOperation(Summary = "Delete device", Description = "Delete an existing device")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Device deleted")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Device not found")]
+    public async Task<IActionResult> DeleteDevice(
+        long deviceId,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteDeviceCommand(deviceId);
+        var result = await deviceCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromConnectDeviceResult(
+            this, result, problemDetailsFactory,
+            device => Ok(new { message = "Device deleted successfully" }));
     }
 }
