@@ -26,6 +26,8 @@ using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Access.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Access.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Access.Application.Internal.QueryServices;
+using SmartIndustries.Smartlock.Platform.Access.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.Access.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Access.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
@@ -159,6 +161,7 @@ builder.Services.AddScoped<IPeopleQueryService, PeopleQueryService>();
 // Access Bounded Context
 builder.Services.AddScoped<IAccessGroupRepository, AccessGroupRepository>();
 builder.Services.AddScoped<IAccessGroupCommandService, AccessGroupCommandService>();
+builder.Services.AddScoped<IAccessGroupQueryService, AccessGroupQueryService>();
 builder.Services.AddScoped<IPersonAccessRepository, PersonAccessRepository>();
 builder.Services.AddScoped<IPersonAccessCommandService, PersonAccessCommandService>();
 

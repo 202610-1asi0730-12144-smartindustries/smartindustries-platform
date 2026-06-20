@@ -1,6 +1,8 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Access.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Access.Application.QueryServices;
+using SmartIndustries.Smartlock.Platform.Access.Domain.Model.Queries;
 using SmartIndustries.Smartlock.Platform.Access.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.Access.Interfaces.Rest.Transform;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
@@ -16,8 +18,22 @@ namespace SmartIndustries.Smartlock.Platform.Access.Interfaces.Rest;
 [SwaggerTag("Access group endpoints")]
 public class AccessGroupsController(
     IAccessGroupCommandService accessGroupCommandService,
+    IAccessGroupQueryService accessGroupQueryService,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(Summary = "Get access groups by organization", Description = "Returns all access groups belonging to an organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Access groups retrieved", typeof(IEnumerable<AccessGroupResource>))]
+    public async Task<IActionResult> GetAccessGroupsByOrganization(
+        long organizationId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetAccessGroupsByOrganizationIdQuery(organizationId);
+        var accessGroups = await accessGroupQueryService.Handle(query, cancellationToken);
+        var resources = accessGroups.Select(AccessGroupResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpPost]
     [SwaggerOperation(Summary = "Create access group", Description = "Create a new access group for an organization")]
     [SwaggerResponse(StatusCodes.Status201Created, "Access group created", typeof(AccessGroupResource))]
