@@ -150,6 +150,8 @@ builder.Services.AddScoped<IPersonCommandService, PersonCommandService>();
 // Access Bounded Context
 builder.Services.AddScoped<IAccessGroupRepository, AccessGroupRepository>();
 builder.Services.AddScoped<IAccessGroupCommandService, AccessGroupCommandService>();
+builder.Services.AddScoped<IPersonAccessRepository, PersonAccessRepository>();
+builder.Services.AddScoped<IPersonAccessCommandService, PersonAccessCommandService>();
 
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
