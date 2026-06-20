@@ -22,6 +22,10 @@ using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServ
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Internal.CommandServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using SmartIndustries.Smartlock.Platform.Access.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.Access.Application.Internal.CommandServices;
+using SmartIndustries.Smartlock.Platform.Access.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Access.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
@@ -142,6 +146,10 @@ builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceCommandService, DeviceCommandService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonCommandService, PersonCommandService>();
+
+// Access Bounded Context
+builder.Services.AddScoped<IAccessGroupRepository, AccessGroupRepository>();
+builder.Services.AddScoped<IAccessGroupCommandService, AccessGroupCommandService>();
 
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
