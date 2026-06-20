@@ -35,4 +35,22 @@ public class SitesController(
             site => Created($"/api/v1/organizations/{site.OrganizationId}/sites/{site.Id}",
                 SiteResourceFromEntityAssembler.ToResourceFromEntity(site)));
     }
+
+    [HttpPut("{siteId:long}")]
+    [SwaggerOperation(Summary = "Update site", Description = "Update an existing site")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Site updated", typeof(SiteResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid data")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Site not found")]
+    public async Task<IActionResult> UpdateSite(
+        long siteId,
+        [FromBody] UpdateSiteInformationResource resource,
+        CancellationToken cancellationToken)
+    {
+        var command = UpdateSiteInformationCommandFromResourceAssembler.ToCommandFromResource(resource, siteId);
+        var result = await siteCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromAddSiteResult(
+            this, result, problemDetailsFactory,
+            site => Ok(SiteResourceFromEntityAssembler.ToResourceFromEntity(site)));
+    }
 }
