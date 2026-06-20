@@ -23,4 +23,8 @@
     <data name="AccessError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
     <data name="AccessError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
     <data name="AccessError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
+    <data name="ReportError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
+    <data name="ReportError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
+    <data name="ReportError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
+    <data name="ReportError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
 </root>
