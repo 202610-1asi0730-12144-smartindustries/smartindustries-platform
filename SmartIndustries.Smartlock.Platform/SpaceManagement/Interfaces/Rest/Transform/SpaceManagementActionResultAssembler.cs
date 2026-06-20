@@ -32,4 +32,16 @@ public static class SpaceManagementActionResultAssembler
         var statusCode = ToStatusCode((SpaceManagementError)result.Error!);
         return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
     }
+
+    public static IActionResult ToActionResultFromAddSiteResult(
+        ControllerBase controller,
+        Result<Site> result,
+        ProblemDetailsFactory problemDetailsFactory,
+        Func<Site, IActionResult> successAction)
+    {
+        if (result.IsSuccess) return successAction(result.Value!);
+
+        var statusCode = ToStatusCode((SpaceManagementError)result.Error!);
+        return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
+    }
 }
