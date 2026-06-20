@@ -54,4 +54,37 @@ public class OrganizationCommandService(
             return Result<Organization>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
         }
     }
+
+    public async Task<Result<Organization>> Handle(UpdateOrganizationInformationCommand command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var organization = await organizationRepository.FindByIdAsync(command.OrganizationId, cancellationToken);
+            if (organization == null)
+                return Result<Organization>.Failure(SpaceManagementError.OrganizationNotFound,
+                    localizer["SpaceManagementError.OrganizationNotFound"]);
+
+            organization.UpdateInformation(command.Name, command.Description);
+            organizationRepository.Update(organization);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result<Organization>.Success(organization);
+        }
+        catch (ArgumentException exception)
+        {
+            return Result<Organization>.Failure(SpaceManagementError.InvalidData, exception.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result<Organization>.Failure(SpaceManagementError.OperationCancelled, localizer["SpaceManagementError.OperationCancelled"]);
+        }
+        catch (DbUpdateException)
+        {
+            return Result<Organization>.Failure(SpaceManagementError.DatabaseError, localizer["SpaceManagementError.DatabaseError"]);
+        }
+        catch (Exception)
+        {
+            return Result<Organization>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
+        }
+    }
 }

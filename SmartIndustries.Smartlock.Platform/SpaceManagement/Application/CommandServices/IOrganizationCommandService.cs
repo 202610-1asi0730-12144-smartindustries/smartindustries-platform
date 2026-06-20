@@ -7,4 +7,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Command
 public interface IOrganizationCommandService
 {
     Task<Result<Organization>> Handle(CreateOrganizationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Organization>> Handle(UpdateOrganizationInformationCommand command, CancellationToken cancellationToken = default);
 }
