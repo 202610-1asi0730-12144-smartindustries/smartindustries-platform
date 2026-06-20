@@ -18,4 +18,10 @@ public partial class Person
     }
 
     private Person() { }
+
+    public void UpdateInformation(string firstName, string lastName, string identityDocument)
+    {
+        Name = new FullName(firstName, lastName);
+        IdentityDocument = new IdentityDocument(identityDocument);
+    }
 }
