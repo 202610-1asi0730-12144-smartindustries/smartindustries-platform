@@ -13,6 +13,11 @@ public static class ModelBuilderExtensions
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
             entity.Property(e => e.OrganizationId).IsRequired();
+            entity.HasOne<Organization>()
+                .WithMany()
+                .HasForeignKey(accessGroup => accessGroup.OrganizationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
             entity.Property(e => e.Description).HasMaxLength(500);
 
             entity.OwnsOne(e => e.Name, name =>

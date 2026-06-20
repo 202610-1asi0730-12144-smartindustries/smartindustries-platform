@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Model.Aggregates;
+using SmartIndustries.Smartlock.Platform.Iam.Domain.Model.Aggregates;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Aggregates;
 
 namespace SmartIndustries.Smartlock.Platform.Administration.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
@@ -12,6 +14,11 @@ public static class ModelBuilderExtensions
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
             entity.Property(e => e.OrganizationId).IsRequired();
+            entity.HasOne<Organization>()
+                .WithMany()
+                .HasForeignKey(role => role.OrganizationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
             entity.Property(e => e.Deletable).IsRequired();
 
             entity.OwnsOne(e => e.Name, name =>
@@ -35,6 +42,11 @@ public static class ModelBuilderExtensions
             entity.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
             entity.Property(e => e.UserId).IsRequired();
             entity.Property(e => e.RoleId).IsRequired();
+            entity.HasOne<Role>()
+                .WithMany()
+                .HasForeignKey(membership => membership.RoleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
     
