@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -52,5 +53,21 @@ public class PeopleController(
         return SpaceManagementActionResultAssembler.ToActionResultFromAddPersonResult(
             this, result, problemDetailsFactory,
             person => Ok(PersonResourceFromEntityAssembler.ToResourceFromEntity(person)));
+    }
+
+    [HttpDelete("{personId:long}")]
+    [SwaggerOperation(Summary = "Delete person", Description = "Delete an existing person and all related data")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Person deleted")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Person not found")]
+    public async Task<IActionResult> DeletePerson(
+        long personId,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeletePersonCommand(personId);
+        var result = await personCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromAddPersonResult(
+            this, result, problemDetailsFactory,
+            person => Ok(new { message = "Person deleted successfully" }));
     }
 }
