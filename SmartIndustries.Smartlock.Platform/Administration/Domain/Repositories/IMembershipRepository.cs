@@ -5,4 +5,5 @@ namespace SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 
 public interface IMembershipRepository : IBaseRepository<Membership>
 {
+    Task<Membership?> FindByUserIdAsync(long userId, CancellationToken cancellationToken = default);
 }
