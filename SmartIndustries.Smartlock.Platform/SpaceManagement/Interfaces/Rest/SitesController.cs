@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -52,5 +53,21 @@ public class SitesController(
         return SpaceManagementActionResultAssembler.ToActionResultFromAddSiteResult(
             this, result, problemDetailsFactory,
             site => Ok(SiteResourceFromEntityAssembler.ToResourceFromEntity(site)));
+    }
+
+    [HttpDelete("{siteId:long}")]
+    [SwaggerOperation(Summary = "Delete site", Description = "Delete an existing site and all its devices")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Site deleted")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Site not found")]
+    public async Task<IActionResult> DeleteSite(
+        long siteId,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteSiteCommand(siteId);
+        var result = await siteCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromAddSiteResult(
+            this, result, problemDetailsFactory,
+            site => Ok(new { message = "Site deleted successfully" }));
     }
 }
