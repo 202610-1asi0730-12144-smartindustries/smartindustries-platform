@@ -20,4 +20,11 @@ public partial class Device
     }
 
     private Device() { }
+
+    public void UpdateInformation(long siteId, string name, string mode)
+    {
+        SiteId = siteId;
+        Name = new GenericName(name);
+        Mode = Enum.Parse<DeviceMode>(mode, ignoreCase: true);
+    }
 }
