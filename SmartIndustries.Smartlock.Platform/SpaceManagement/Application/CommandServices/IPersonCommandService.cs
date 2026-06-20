@@ -7,4 +7,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Command
 public interface IPersonCommandService
 {
     Task<Result<Person>> Handle(AddPersonToOrganizationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Person>> Handle(UpdatePersonInformationCommand command, CancellationToken cancellationToken = default);
 }

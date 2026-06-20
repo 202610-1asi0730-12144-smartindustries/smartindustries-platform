@@ -49,4 +49,37 @@ public class PersonCommandService(
             return Result<Person>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
         }
     }
+
+    public async Task<Result<Person>> Handle(UpdatePersonInformationCommand command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var person = await personRepository.FindByIdAsync(command.PersonId, cancellationToken);
+            if (person == null)
+                return Result<Person>.Failure(SpaceManagementError.PersonNotFound,
+                    localizer["SpaceManagementError.PersonNotFound"]);
+
+            person.UpdateInformation(command.FirstName, command.LastName, command.IdentityDocument);
+            personRepository.Update(person);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result<Person>.Success(person);
+        }
+        catch (ArgumentException exception)
+        {
+            return Result<Person>.Failure(SpaceManagementError.InvalidData, exception.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result<Person>.Failure(SpaceManagementError.OperationCancelled, localizer["SpaceManagementError.OperationCancelled"]);
+        }
+        catch (DbUpdateException)
+        {
+            return Result<Person>.Failure(SpaceManagementError.DatabaseError, localizer["SpaceManagementError.DatabaseError"]);
+        }
+        catch (Exception)
+        {
+            return Result<Person>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
+        }
+    }
 }
