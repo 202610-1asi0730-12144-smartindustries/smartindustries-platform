@@ -20,10 +20,27 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest;
 [SwaggerTag("Organization endpoints")]
 public class OrganizationsController(
     IOrganizationCommandService organizationCommandService,
+    IOrganizationQueryService organizationQueryService,
     IDeviceQueryService deviceQueryService,
     IIamContextFacade iamContextFacade,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(Summary = "Get my organizations", Description = "Returns all organizations where the authenticated user is a member")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Organizations retrieved", typeof(IEnumerable<OrganizationSummaryResource>))]
+    public async Task<IActionResult> GetMyOrganizations(
+        CancellationToken cancellationToken)
+    {
+        var userId = iamContextFacade.GetCurrentUserId(HttpContext);
+        if (userId == null)
+            return Unauthorized();
+
+        var query = new GetOrganizationsByUserIdQuery(userId.Value);
+        var organizations = await organizationQueryService.Handle(query, cancellationToken);
+        var resources = organizations.Select(OrganizationSummaryResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpGet("{organizationId:long}/devices")]
     [SwaggerOperation(Summary = "Get devices by organization", Description = "Returns all devices belonging to an organization")]
     [SwaggerResponse(StatusCodes.Status200OK, "Devices retrieved", typeof(IEnumerable<DeviceResource>))]

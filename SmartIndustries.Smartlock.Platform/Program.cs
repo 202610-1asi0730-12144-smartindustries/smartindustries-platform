@@ -150,6 +150,7 @@ builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 // SpaceManagement Bounded Context
 builder.Services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddScoped<IOrganizationCommandService, OrganizationCommandService>();
+builder.Services.AddScoped<IOrganizationQueryService, OrganizationQueryService>();
 builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 builder.Services.AddScoped<ISiteCommandService, SiteCommandService>();
 builder.Services.AddScoped<ISiteQueryService, SiteQueryService>();
