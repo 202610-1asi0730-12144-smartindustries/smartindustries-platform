@@ -8,4 +8,5 @@ public interface IOrganizationCommandService
 {
     Task<Result<Organization>> Handle(CreateOrganizationCommand command, CancellationToken cancellationToken = default);
     Task<Result<Organization>> Handle(UpdateOrganizationInformationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Organization>> Handle(DeleteOrganizationCommand command, CancellationToken cancellationToken = default);
 }
