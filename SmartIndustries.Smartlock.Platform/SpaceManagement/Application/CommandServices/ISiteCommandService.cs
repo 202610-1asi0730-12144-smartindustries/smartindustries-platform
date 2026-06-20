@@ -8,4 +8,5 @@ public interface ISiteCommandService
 {
     Task<Result<Site>> Handle(AddSiteToOrganizationCommand command, CancellationToken cancellationToken = default);
     Task<Result<Site>> Handle(UpdateSiteInformationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Site>> Handle(DeleteSiteCommand command, CancellationToken cancellationToken = default);
 }

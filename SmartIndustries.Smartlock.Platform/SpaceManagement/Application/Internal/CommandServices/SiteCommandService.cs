@@ -76,4 +76,32 @@ public class SiteCommandService(
             return Result<Site>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
         }
     }
+
+    public async Task<Result<Site>> Handle(DeleteSiteCommand command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var site = await siteRepository.FindByIdAsync(command.SiteId, cancellationToken);
+            if (site == null)
+                return Result<Site>.Failure(SpaceManagementError.SiteNotFound,
+                    localizer["SpaceManagementError.SiteNotFound"]);
+
+            siteRepository.Remove(site);
+            await unitOfWork.CompleteAsync(cancellationToken);
+
+            return Result<Site>.Success(site);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result<Site>.Failure(SpaceManagementError.OperationCancelled, localizer["SpaceManagementError.OperationCancelled"]);
+        }
+        catch (DbUpdateException)
+        {
+            return Result<Site>.Failure(SpaceManagementError.DatabaseError, localizer["SpaceManagementError.DatabaseError"]);
+        }
+        catch (Exception)
+        {
+            return Result<Site>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
+        }
+    }
 }
