@@ -28,6 +28,22 @@ public partial class Role
             OrganizationId = organizationId,
             Name = new GenericName("Basic"),
             Permissions = new RolePermissions(false, false, false),
-            Deletable = false
+            Deletable = true
         };
+
+    public static Role CreateCustom(long organizationId, string name, RolePermissions permissions)
+    {
+        if (string.Equals(name, "Root", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException("Role name 'Root' is reserved.", nameof(name));
+        if (string.Equals(name, "Basic", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException("Role name 'Basic' is reserved.", nameof(name));
+
+        return new Role
+        {
+            OrganizationId = organizationId,
+            Name = new GenericName(name),
+            Permissions = permissions,
+            Deletable = true
+        };
+    }
 }
