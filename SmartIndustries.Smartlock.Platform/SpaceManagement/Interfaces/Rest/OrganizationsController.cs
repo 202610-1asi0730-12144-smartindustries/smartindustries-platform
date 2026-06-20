@@ -4,7 +4,9 @@ using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.
 using SmartIndustries.Smartlock.Platform.Iam.Interfaces.Acl;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Queries;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -18,9 +20,23 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest;
 [SwaggerTag("Organization endpoints")]
 public class OrganizationsController(
     IOrganizationCommandService organizationCommandService,
+    IDeviceQueryService deviceQueryService,
     IIamContextFacade iamContextFacade,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet("{organizationId:long}/devices")]
+    [SwaggerOperation(Summary = "Get devices by organization", Description = "Returns all devices belonging to an organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Devices retrieved", typeof(IEnumerable<DeviceResource>))]
+    public async Task<IActionResult> GetDevicesByOrganization(
+        long organizationId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetDevicesByOrganizationIdQuery(organizationId);
+        var devices = await deviceQueryService.Handle(query, cancellationToken);
+        var resources = devices.Select(DeviceResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpPost]
     [SwaggerOperation(Summary = "Create organization", Description = "Create a new organization")]
     [SwaggerResponse(StatusCodes.Status201Created, "Organization created", typeof(OrganizationResource))]

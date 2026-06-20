@@ -151,6 +151,7 @@ builder.Services.AddScoped<ISiteCommandService, SiteCommandService>();
 builder.Services.AddScoped<ISiteQueryService, SiteQueryService>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceCommandService, DeviceCommandService>();
+builder.Services.AddScoped<IDeviceQueryService, DeviceQueryService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonCommandService, PersonCommandService>();
 
