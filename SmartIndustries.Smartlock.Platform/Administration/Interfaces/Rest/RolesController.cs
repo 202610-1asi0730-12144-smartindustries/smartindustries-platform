@@ -35,4 +35,22 @@ public class RolesController(
             role => Created($"/api/v1/organizations/{role.OrganizationId}/roles/{role.Id}",
                 RoleResourceFromEntityAssembler.ToResourceFromEntity(role)));
     }
+
+    [HttpPut("{roleId:long}")]
+    [SwaggerOperation(Summary = "Update role", Description = "Update an existing role")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Role updated", typeof(RoleResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid data")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Role not found")]
+    public async Task<IActionResult> UpdateRole(
+        long roleId,
+        [FromBody] UpdateRoleInformationResource resource,
+        CancellationToken cancellationToken)
+    {
+        var command = UpdateRoleInformationCommandFromResourceAssembler.ToCommandFromResource(resource, roleId);
+        var result = await roleCommandService.Handle(command, cancellationToken);
+
+        return AdministrationActionResultAssembler.ToActionResultFromAddRoleResult(
+            this, result, problemDetailsFactory,
+            role => Ok(RoleResourceFromEntityAssembler.ToResourceFromEntity(role)));
+    }
 }
