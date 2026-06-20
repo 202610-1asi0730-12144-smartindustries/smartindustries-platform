@@ -31,4 +31,16 @@ public static class AdministrationActionResultAssembler
         var statusCode = ToStatusCode((AdministrationError)result.Error!);
         return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
     }
+
+    public static IActionResult ToActionResultFromUpdateUserRoleResult(
+        ControllerBase controller,
+        Result<Membership> result,
+        ProblemDetailsFactory problemDetailsFactory,
+        Func<Membership, IActionResult> successAction)
+    {
+        if (result.IsSuccess) return successAction(result.Value!);
+
+        var statusCode = ToStatusCode((AdministrationError)result.Error!);
+        return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
+    }
 }
