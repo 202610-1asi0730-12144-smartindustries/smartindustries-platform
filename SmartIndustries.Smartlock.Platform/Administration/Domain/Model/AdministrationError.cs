@@ -4,6 +4,7 @@ public enum AdministrationError
 {
     None,
     RoleNotFound,
+    MembershipNotFound,
     InvalidData,
     OperationCancelled,
     DatabaseError,
