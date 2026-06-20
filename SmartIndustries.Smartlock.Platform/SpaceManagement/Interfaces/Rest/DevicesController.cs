@@ -35,4 +35,22 @@ public class DevicesController(
             device => Created($"/api/v1/sites/{device.SiteId}/devices/{device.Id}",
                 DeviceResourceFromEntityAssembler.ToResourceFromEntity(device)));
     }
+
+    [HttpPut("{deviceId:long}")]
+    [SwaggerOperation(Summary = "Update device", Description = "Update an existing device")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Device updated", typeof(DeviceResource))]
+    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid data")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Device not found")]
+    public async Task<IActionResult> UpdateDevice(
+        long deviceId,
+        [FromBody] UpdateDeviceInformationResource resource,
+        CancellationToken cancellationToken)
+    {
+        var command = UpdateDeviceInformationCommandFromResourceAssembler.ToCommandFromResource(resource, deviceId);
+        var result = await deviceCommandService.Handle(command, cancellationToken);
+
+        return SpaceManagementActionResultAssembler.ToActionResultFromConnectDeviceResult(
+            this, result, problemDetailsFactory,
+            device => Ok(DeviceResourceFromEntityAssembler.ToResourceFromEntity(device)));
+    }
 }
