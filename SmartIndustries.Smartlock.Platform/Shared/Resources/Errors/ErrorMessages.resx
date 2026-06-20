@@ -17,6 +17,7 @@
     <data name="SpaceManagementError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
     <data name="SpaceManagementError.InternalServerError" xml:space="preserve"><value>Internal server error occurred.</value></data>
     <data name="AdministrationError.RoleNotFound" xml:space="preserve"><value>Role not found.</value></data>
+    <data name="AdministrationError.MembershipNotFound" xml:space="preserve"><value>Membership not found.</value></data>
     <data name="AdministrationError.InvalidData" xml:space="preserve"><value>Invalid data.</value></data>
     <data name="AdministrationError.OperationCancelled" xml:space="preserve"><value>The operation was cancelled.</value></data>
     <data name="AdministrationError.DatabaseError" xml:space="preserve"><value>Database error occurred.</value></data>
