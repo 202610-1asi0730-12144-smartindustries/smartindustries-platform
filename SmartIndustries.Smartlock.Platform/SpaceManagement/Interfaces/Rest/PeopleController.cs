@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using SmartIndustries.Smartlock.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using SmartIndustries.Smartlock.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.QueryServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Queries;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Resources;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,8 +19,22 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest;
 [SwaggerTag("People endpoints")]
 public class PeopleController(
     IPersonCommandService personCommandService,
+    IPeopleQueryService peopleQueryService,
     ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(Summary = "Get people by organization", Description = "Returns all people belonging to an organization")]
+    [SwaggerResponse(StatusCodes.Status200OK, "People retrieved", typeof(IEnumerable<PersonResource>))]
+    public async Task<IActionResult> GetPeopleByOrganization(
+        long organizationId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetPeopleByOrganizationIdQuery(organizationId);
+        var people = await peopleQueryService.Handle(query, cancellationToken);
+        var resources = people.Select(PersonResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
     [HttpPost]
     [SwaggerOperation(Summary = "Add person to organization", Description = "Add a new person to an organization")]
     [SwaggerResponse(StatusCodes.Status201Created, "Person created", typeof(PersonResource))]

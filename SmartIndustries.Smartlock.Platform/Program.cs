@@ -154,6 +154,7 @@ builder.Services.AddScoped<IDeviceCommandService, DeviceCommandService>();
 builder.Services.AddScoped<IDeviceQueryService, DeviceQueryService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonCommandService, PersonCommandService>();
+builder.Services.AddScoped<IPeopleQueryService, PeopleQueryService>();
 
 // Access Bounded Context
 builder.Services.AddScoped<IAccessGroupRepository, AccessGroupRepository>();
