@@ -5,4 +5,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories
 
 public interface IDeviceRepository : IBaseRepository<Device>
 {
+    Task<IEnumerable<Device>> FindByOrganizationIdAsync(long organizationId, CancellationToken cancellationToken = default);
 }
