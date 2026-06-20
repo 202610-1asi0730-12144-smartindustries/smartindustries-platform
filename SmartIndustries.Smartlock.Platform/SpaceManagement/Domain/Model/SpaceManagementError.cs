@@ -7,6 +7,7 @@ public enum SpaceManagementError
     OrganizationAlreadyExists,
     SiteNotFound,
     DeviceNotFound,
+    PersonNotFound,
     InvalidData,
     OperationCancelled,
     DatabaseError,
