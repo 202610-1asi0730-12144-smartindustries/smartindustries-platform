@@ -140,6 +140,8 @@ builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 builder.Services.AddScoped<ISiteCommandService, SiteCommandService>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceCommandService, DeviceCommandService>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonCommandService, PersonCommandService>();
 
 // Administration Bounded Context
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
