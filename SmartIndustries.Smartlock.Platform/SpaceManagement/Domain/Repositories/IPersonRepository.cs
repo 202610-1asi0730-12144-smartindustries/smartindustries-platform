@@ -5,4 +5,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories
 
 public interface IPersonRepository : IBaseRepository<Person>
 {
+    Task<IEnumerable<Person>> FindByOrganizationIdAsync(long organizationId, CancellationToken cancellationToken = default);
 }
