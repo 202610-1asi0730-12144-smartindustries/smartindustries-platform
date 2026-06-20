@@ -1,5 +1,6 @@
 using Cortex.Mediator;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using SmartIndustries.Smartlock.Platform.Administration.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Model;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Model.Aggregates;
@@ -8,13 +9,15 @@ using SmartIndustries.Smartlock.Platform.Administration.Domain.Model.Events;
 using SmartIndustries.Smartlock.Platform.Administration.Domain.Repositories;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Shared.Resources.Errors;
 
 namespace SmartIndustries.Smartlock.Platform.Administration.Application.Internal.CommandServices;
 
 public class RoleCommandService(
     IRoleRepository roleRepository,
     IUnitOfWork unitOfWork,
-    IMediator mediator) : IRoleCommandService
+    IMediator mediator,
+    IStringLocalizer<ErrorMessages> localizer) : IRoleCommandService
 {
     public async Task<Result<Role>> Handle(CreateRootRoleCommand command, CancellationToken cancellationToken = default)
     {
@@ -35,15 +38,15 @@ public class RoleCommandService(
         }
         catch (OperationCanceledException)
         {
-            return Result<Role>.Failure(AdministrationError.OperationCancelled, "Operation was cancelled.");
+            return Result<Role>.Failure(AdministrationError.OperationCancelled, localizer["AdministrationError.OperationCancelled"]);
         }
         catch (DbUpdateException)
         {
-            return Result<Role>.Failure(AdministrationError.DatabaseError, "Database error occurred.");
+            return Result<Role>.Failure(AdministrationError.DatabaseError, localizer["AdministrationError.DatabaseError"]);
         }
         catch (Exception)
         {
-            return Result<Role>.Failure(AdministrationError.InternalServerError, "An internal error occurred.");
+            return Result<Role>.Failure(AdministrationError.InternalServerError, localizer["AdministrationError.InternalServerError"]);
         }
     }
 
@@ -63,15 +66,15 @@ public class RoleCommandService(
         }
         catch (OperationCanceledException)
         {
-            return Result<Role>.Failure(AdministrationError.OperationCancelled, "Operation was cancelled.");
+            return Result<Role>.Failure(AdministrationError.OperationCancelled, localizer["AdministrationError.OperationCancelled"]);
         }
         catch (DbUpdateException)
         {
-            return Result<Role>.Failure(AdministrationError.DatabaseError, "Database error occurred.");
+            return Result<Role>.Failure(AdministrationError.DatabaseError, localizer["AdministrationError.DatabaseError"]);
         }
         catch (Exception)
         {
-            return Result<Role>.Failure(AdministrationError.InternalServerError, "An internal error occurred.");
+            return Result<Role>.Failure(AdministrationError.InternalServerError, localizer["AdministrationError.InternalServerError"]);
         }
     }
 }

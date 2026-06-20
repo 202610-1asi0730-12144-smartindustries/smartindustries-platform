@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Shared.Resources.Errors;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Aggregates;
@@ -11,7 +13,8 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Interna
 
 public class SiteCommandService(
     ISiteRepository siteRepository,
-    IUnitOfWork unitOfWork) : ISiteCommandService
+    IUnitOfWork unitOfWork,
+    IStringLocalizer<ErrorMessages> localizer) : ISiteCommandService
 {
     public async Task<Result<Site>> Handle(AddSiteToOrganizationCommand command, CancellationToken cancellationToken = default)
     {
@@ -29,15 +32,15 @@ public class SiteCommandService(
         }
         catch (OperationCanceledException)
         {
-            return Result<Site>.Failure(SpaceManagementError.OperationCancelled, "Operation was cancelled.");
+            return Result<Site>.Failure(SpaceManagementError.OperationCancelled, localizer["SpaceManagementError.OperationCancelled"]);
         }
         catch (DbUpdateException)
         {
-            return Result<Site>.Failure(SpaceManagementError.DatabaseError, "Database error occurred.");
+            return Result<Site>.Failure(SpaceManagementError.DatabaseError, localizer["SpaceManagementError.DatabaseError"]);
         }
         catch (Exception)
         {
-            return Result<Site>.Failure(SpaceManagementError.InternalServerError, "An internal error occurred.");
+            return Result<Site>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
         }
     }
 }

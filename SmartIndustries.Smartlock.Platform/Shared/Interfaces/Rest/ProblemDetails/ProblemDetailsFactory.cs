@@ -24,7 +24,7 @@ public class ProblemDetailsFactory
     public IActionResult CreateProblemDetails(ControllerBase controller, int statusCode, Enum? errorEnum, string detailMessage)
     {
         var pd = _aspNetCoreFactory.CreateProblemDetails(controller.HttpContext, statusCode,
-            errorEnum != null ? _errorLocalizer[$"{errorEnum}"] : _commonLocalizer["GenericError"],
+            errorEnum != null ? _errorLocalizer[$"{errorEnum.GetType().Name}.{errorEnum}"] : _commonLocalizer["GenericError"],
             detail: detailMessage);
 
         if (pd == null)
@@ -32,14 +32,14 @@ public class ProblemDetailsFactory
             pd = new Microsoft.AspNetCore.Mvc.ProblemDetails
             {
                 Status = statusCode,
-                Title = errorEnum != null ? _errorLocalizer[$"{errorEnum}"] : _commonLocalizer["GenericError"],
+                Title = errorEnum != null ? _errorLocalizer[$"{errorEnum.GetType().Name}.{errorEnum}"] : _commonLocalizer["GenericError"],
                 Detail = detailMessage,
                 Instance = controller.HttpContext.Request.Path
             };
         }
         else
         {
-            pd.Title = errorEnum != null ? _errorLocalizer[$"{errorEnum}"] : _commonLocalizer["GenericError"];
+            pd.Title = errorEnum != null ? _errorLocalizer[$"{errorEnum.GetType().Name}.{errorEnum}"] : _commonLocalizer["GenericError"];
             pd.Detail = detailMessage;
             pd.Instance = controller.HttpContext.Request.Path;
         }

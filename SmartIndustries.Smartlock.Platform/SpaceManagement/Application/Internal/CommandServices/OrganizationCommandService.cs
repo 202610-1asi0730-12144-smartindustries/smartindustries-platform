@@ -1,7 +1,9 @@
 using Cortex.Mediator;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
 using SmartIndustries.Smartlock.Platform.Shared.Domain.Repositories;
+using SmartIndustries.Smartlock.Platform.Shared.Resources.Errors;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServices;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Aggregates;
@@ -14,14 +16,15 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Interna
 public class OrganizationCommandService(
     IOrganizationRepository organizationRepository,
     IUnitOfWork unitOfWork,
-    IMediator mediator) : IOrganizationCommandService
+    IMediator mediator,
+    IStringLocalizer<ErrorMessages> localizer) : IOrganizationCommandService
 {
     public async Task<Result<Organization>> Handle(CreateOrganizationCommand command, CancellationToken cancellationToken = default)
     {
         if (await organizationRepository.ExistsByNameAsync(command.Name, cancellationToken))
             return Result<Organization>.Failure(
                 SpaceManagementError.OrganizationAlreadyExists,
-                $"Organization '{command.Name}' already exists.");
+                localizer["SpaceManagementError.OrganizationAlreadyExists"]);
 
         try
         {
@@ -40,15 +43,15 @@ public class OrganizationCommandService(
         }
         catch (OperationCanceledException)
         {
-            return Result<Organization>.Failure(SpaceManagementError.OperationCancelled, "Operation was cancelled.");
+            return Result<Organization>.Failure(SpaceManagementError.OperationCancelled, localizer["SpaceManagementError.OperationCancelled"]);
         }
         catch (DbUpdateException)
         {
-            return Result<Organization>.Failure(SpaceManagementError.DatabaseError, "Database error occurred.");
+            return Result<Organization>.Failure(SpaceManagementError.DatabaseError, localizer["SpaceManagementError.DatabaseError"]);
         }
         catch (Exception)
         {
-            return Result<Organization>.Failure(SpaceManagementError.InternalServerError, "An internal error occurred.");
+            return Result<Organization>.Failure(SpaceManagementError.InternalServerError, localizer["SpaceManagementError.InternalServerError"]);
         }
     }
 }
