@@ -28,6 +28,10 @@
     <ItemGroup>
       <EmbeddedResource Update="Shared\Resources\Errors\ErrorMessages.es.resx">
         <DependentUpon>ErrorMessages.cs</DependentUpon>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Shared\Resources\Errors\ErrorMessages.resx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>
 
