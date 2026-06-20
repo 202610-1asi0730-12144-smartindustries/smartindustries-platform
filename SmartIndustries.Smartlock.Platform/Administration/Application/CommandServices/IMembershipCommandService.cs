@@ -7,4 +7,5 @@ namespace SmartIndustries.Smartlock.Platform.Administration.Application.CommandS
 public interface IMembershipCommandService
 {
     Task<Result<Membership>> Handle(AddRootUserToOrganizationCommand command, CancellationToken cancellationToken = default);
+    Task<Result<Membership>> Handle(UpdateUserRoleInOrganizationCommand command, CancellationToken cancellationToken = default);
 }
