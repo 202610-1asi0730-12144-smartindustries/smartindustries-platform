@@ -1,3 +1,4 @@
+using Cortex.Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using SmartIndustries.Smartlock.Platform.Shared.Application.Model;
@@ -7,6 +8,7 @@ using SmartIndustries.Smartlock.Platform.SpaceManagement.Application.CommandServ
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Aggregates;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Commands;
+using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Model.Events;
 using SmartIndustries.Smartlock.Platform.SpaceManagement.Domain.Repositories;
 
 namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Internal.CommandServices;
@@ -14,6 +16,7 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Interna
 public class PersonCommandService(
     IPersonRepository personRepository,
     IUnitOfWork unitOfWork,
+    IMediator mediator,
     IStringLocalizer<ErrorMessages> localizer) : IPersonCommandService
 {
     public async Task<Result<Person>> Handle(AddPersonToOrganizationCommand command, CancellationToken cancellationToken = default)
@@ -23,6 +26,9 @@ public class PersonCommandService(
             var person = new Person(command.OrganizationId, command.FirstName, command.LastName, command.IdentityDocument);
             await personRepository.AddAsync(person, cancellationToken);
             await unitOfWork.CompleteAsync(cancellationToken);
+
+            await mediator.PublishAsync(
+                new PersonAddedToOrganizationEvent(person.Id, $"{person.Name.FirstName} {person.Name.LastName}", person.IdentityDocument.Value), cancellationToken);
 
             return Result<Person>.Success(person);
         }
