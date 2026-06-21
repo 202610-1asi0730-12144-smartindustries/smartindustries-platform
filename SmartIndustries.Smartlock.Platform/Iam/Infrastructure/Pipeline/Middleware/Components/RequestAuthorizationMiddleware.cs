@@ -13,7 +13,14 @@ public class RequestAuthorizationMiddleware(RequestDelegate next)
         ITokenService tokenService)
     {
         var cancellationToken = context.RequestAborted;
-        var allowAnonymous = context.Request.HttpContext.GetEndpoint()!.Metadata
+        var endpoint = context.Request.HttpContext.GetEndpoint();
+        if (endpoint == null)
+        {
+            await next(context);
+            return;
+        }
+
+        var allowAnonymous = endpoint.Metadata
             .Any(m => m.GetType() == typeof(AllowAnonymousAttribute));
 
         if (allowAnonymous)
