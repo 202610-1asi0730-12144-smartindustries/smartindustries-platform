@@ -5,5 +5,5 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.QuerySe
 
 public interface IDeviceQueryService
 {
-    Task<IEnumerable<Device>> Handle(GetDevicesByOrganizationIdQuery query, CancellationToken cancellationToken = default);
+    Task<IEnumerable<(Device Device, string SiteName)>> Handle(GetDevicesByOrganizationIdQuery query, CancellationToken cancellationToken = default);
 }

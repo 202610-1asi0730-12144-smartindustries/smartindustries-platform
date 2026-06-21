@@ -8,13 +8,16 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Infrastructure.Pers
 
 public class DeviceRepository(AppDbContext context) : BaseRepository<Device>(context), IDeviceRepository
 {
-    public async Task<IEnumerable<Device>> FindByOrganizationIdAsync(long organizationId, CancellationToken cancellationToken = default)
-        => await context.Set<Device>()
+    public async Task<IEnumerable<(Device Device, string SiteName)>> FindByOrganizationIdAsync(long organizationId, CancellationToken cancellationToken = default)
+    {
+        var results = await context.Set<Device>()
             .Join(context.Set<Site>(),
                 device => device.SiteId,
                 site => site.Id,
                 (device, site) => new { device, site })
             .Where(joined => joined.site.OrganizationId == organizationId)
-            .Select(joined => joined.device)
+            .Select(joined => new { joined.device, SiteName = joined.site.Name.Value })
             .ToListAsync(cancellationToken);
+        return results.Select(r => (r.device, r.SiteName));
+    }
 }

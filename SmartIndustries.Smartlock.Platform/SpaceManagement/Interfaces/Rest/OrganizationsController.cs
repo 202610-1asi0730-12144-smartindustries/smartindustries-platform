@@ -50,7 +50,7 @@ public class OrganizationsController(
     {
         var query = new GetDevicesByOrganizationIdQuery(organizationId);
         var devices = await deviceQueryService.Handle(query, cancellationToken);
-        var resources = devices.Select(DeviceResourceFromEntityAssembler.ToResourceFromEntity);
+        var resources = devices.Select(d => DeviceResourceFromEntityAssembler.ToResourceFromEntity(d.Device, d.SiteName));
         return Ok(resources);
     }
 

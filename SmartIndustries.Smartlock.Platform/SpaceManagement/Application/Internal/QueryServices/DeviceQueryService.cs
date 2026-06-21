@@ -7,6 +7,6 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Application.Interna
 
 public class DeviceQueryService(IDeviceRepository deviceRepository) : IDeviceQueryService
 {
-    public async Task<IEnumerable<Device>> Handle(GetDevicesByOrganizationIdQuery query, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<(Device Device, string SiteName)>> Handle(GetDevicesByOrganizationIdQuery query, CancellationToken cancellationToken = default)
         => await deviceRepository.FindByOrganizationIdAsync(query.OrganizationId, cancellationToken);
 }

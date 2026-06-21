@@ -5,6 +5,6 @@ namespace SmartIndustries.Smartlock.Platform.SpaceManagement.Interfaces.Rest.Tra
 
 public static class DeviceResourceFromEntityAssembler
 {
-    public static DeviceResource ToResourceFromEntity(Device device)
-        => new(device.Id, device.SiteId, device.Name.Value, device.Status.ToString(), device.Mode.ToString());
+    public static DeviceResource ToResourceFromEntity(Device device, string siteName = "")
+        => new(device.Id, device.SiteId, device.Name.Value, device.Status.ToString(), device.Mode.ToString(), siteName);
 }
